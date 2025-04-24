@@ -1,0 +1,136 @@
+const myVideo = document.querySelector("#my-video");
+console.log(myVideo);
+
+//-----------------------------------------------------
+//here is my logic for playing the sound
+//first I am fetching the right play button
+
+const playButton = document.querySelector("#play-button");
+console.log(playButton);
+//play sound on click
+playButton.addEventListener("click", playAudio);
+
+//my play logic
+function playAudio() {
+airportAudio.play();
+}
+
+//------------------------------------------------------
+
+//-----------------------------------------------------
+//here is my logic for pausing the sound
+//first I am fetching the right play button
+
+const pauseButton = document.querySelector("#pause-button");
+console.log(pauseButton);
+//play sound on click
+pauseButton.addEventListener("click", pauseAudio);
+
+//my play logic
+function pauseAudio() {
+myVideo.pause();
+}
+
+//------------------------------------------------------
+
+//-----------------------------------------------------
+//here is my logic for playing and pausing the video with a single button
+//first I am fetching the right play pause button
+
+const playpauseButton = document.querySelector("#play-pause-button");
+console.log(playpauseButton);
+//pausing video on click
+pauseButton.addEventListener("click", pauseVideo);
+
+//my pause logic
+function pauseVideo() {
+myVideo.pause();
+}
+
+//------------------------------------------------------
+
+//-----------------------------------------------------
+//here is my logic for playing and pausing the video with a single button
+//first I am fetching the right play pause button
+
+const playPauseButton = document.querySelector("#play-pause-button");
+console.log(playpauseButton);
+//pausing video on click
+playpauseButton.addEventListener("click", toggleVideo);
+
+const playPauseImg = document.querySelector("play-pause-img");
+console.log(playPauseImg);
+
+//my pause logic
+function toggleVideo() {
+if (myVideo.paused || myVideo.ended) {
+myVideo.play();
+playPauseImg.src = "https://img.icons8.com/ios-glyphs/30/play--v2.png";
+} else {
+myVideo.pause();
+playPauseImg.src = "https://img.icons8.com/ios-gluphs/30/pause--v2.png";
+}
+}
+
+//------------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Video example</title>
+<script src="videoscripts.js" defer></script>
+<link rel="stylesheet" href="style.css" />
+</head>
+</body>
+<h1>Learning to play video</h1>
+<video src="stardust.mp4" id="my-video" controls></video>
+<button id="play-button">Play video </button>
+<button id="pause-button">Pause-button</button>
+<button id="play-pause-button">
+<img
+id="play-pause-button"
+src="http://img.icons8.com/ios-glyphs/30/play--v2.png"
+alt="Play Button"
+width="24"
+height="24"
+/>
+</button>
+</body>
+</html>
+
+
+:root {
+--bg-color: rgba(144, 144, 173, 0.455);
+--my-padding: 10px;
+--my-borders: 24px;
+}
+
+audio {
+display: block;
+margin-bottom: 20px;
+}
+
+video {
+display: block;
+margin-bottom: 20px;
+}
+
+video {
+width: 600px;
+height: 400px;
+}
+
+button {
+padding: var(--my-padding);
+font-size: 1.2rem;
+border-radius: var(--my-borders);
+margin-right: 10px;
+cursor: pointer;
+background-color: var(--bg-color);
+}
+
+button:hover {
+scale: 0.9;
+}
