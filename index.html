@@ -1,136 +1,218 @@
-const myVideo = document.querySelector("#my-video");
-console.log(myVideo);
-
-//-----------------------------------------------------
-//here is my logic for playing the sound
-//first I am fetching the right play button
-
-const playButton = document.querySelector("#play-button");
-console.log(playButton);
-//play sound on click
-playButton.addEventListener("click", playAudio);
-
-//my play logic
-function playAudio() {
-airportAudio.play();
-}
-
-//------------------------------------------------------
-
-//-----------------------------------------------------
-//here is my logic for pausing the sound
-//first I am fetching the right play button
-
-const pauseButton = document.querySelector("#pause-button");
-console.log(pauseButton);
-//play sound on click
-pauseButton.addEventListener("click", pauseAudio);
-
-//my play logic
-function pauseAudio() {
-myVideo.pause();
-}
-
-//------------------------------------------------------
-
-//-----------------------------------------------------
-//here is my logic for playing and pausing the video with a single button
-//first I am fetching the right play pause button
-
-const playpauseButton = document.querySelector("#play-pause-button");
-console.log(playpauseButton);
-//pausing video on click
-pauseButton.addEventListener("click", pauseVideo);
-
-//my pause logic
-function pauseVideo() {
-myVideo.pause();
-}
-
-//------------------------------------------------------
-
-//-----------------------------------------------------
-//here is my logic for playing and pausing the video with a single button
-//first I am fetching the right play pause button
-
-const playPauseButton = document.querySelector("#play-pause-button");
-console.log(playpauseButton);
-//pausing video on click
-playpauseButton.addEventListener("click", toggleVideo);
-
-const playPauseImg = document.querySelector("play-pause-img");
-console.log(playPauseImg);
-
-//my pause logic
-function toggleVideo() {
-if (myVideo.paused || myVideo.ended) {
-myVideo.play();
-playPauseImg.src = "https://img.icons8.com/ios-glyphs/30/play--v2.png";
-} else {
-myVideo.pause();
-playPauseImg.src = "https://img.icons8.com/ios-gluphs/30/pause--v2.png";
-}
-}
-
-//------------------------------------------------------
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Video example</title>
-<script src="videoscripts.js" defer></script>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Music Album</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+    body {
+      background-color: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .main {
+      display: flex;
+      flex: 1;
+    }
+    .album-art {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .album-art img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+    }
+    .track-list {
+      flex: 1;
+      background-color: #222;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .track-button {
+      background-color: #333;
+      border: none;
+      color: white;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .track-button img {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+    }
+    .controls {
+      background-color: #222;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .controls img {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+    .progress-container {
+      flex: 1;
+      height: 6px;
+      background: #444;
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+    }
+    .progress {
+      height: 100%;
+      background: #0f0;
+      width: 0%;
+      border-radius: 3px;
+    }
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .volume-slider {
+      width: 100px;
+    }
+  </style>
 </head>
-</body>
-<h1>Learning to play video</h1>
-<video src="stardust.mp4" id="my-video" controls></video>
-<button id="play-button">Play video </button>
-<button id="pause-button">Pause-button</button>
-<button id="play-pause-button">
-<img
-id="play-pause-button"
-src="http://img.icons8.com/ios-glyphs/30/play--v2.png"
-alt="Play Button"
-width="24"
-height="24"
-/>
-</button>
+<body>
+  <div class="main">
+    <div class="album-art">
+      <img id="albumImage" src="images/hes.jpg" alt="Album Art">
+    </div>
+    <div class="track-list">
+      <button class="track-button" onclick="playTrack(0)"><img src="images/hes.jpg">Hes</button>
+      <button class="track-button" onclick="playTrack(1)"><img src="images/dry.jpg">Dry Down feat.Ben Snaath</button>
+      <button class="track-button" onclick="playTrack(2)"><img src="images/leapt.jpg">Leapt</button>
+      <button class="track-button" onclick="playTrack(3)"><img src="images/water.jpg">Water Feature</button>
+    </div>
+  </div>
+  <div class="controls">
+    <img id="modeBtn" src="icons/loop-one.png" onclick="toggleMode()">
+    <img src="icons/prev.png" onclick="prevTrack()">
+    <img id="playPauseBtn" src="icons/play.png" onclick="togglePlayPause()">
+    <img src="icons/next.png" onclick="nextTrack()">
+    <img id="likeBtn" src="icons/heart-off.png" onclick="toggleLike()">
+    <div class="progress-container" onclick="seek(event)">
+      <div id="progress" class="progress"></div>
+    </div>
+    <div class="volume-control">
+      <img id="volumeBtn" src="icons/volume.png" onclick="toggleMute()">
+      <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1" onchange="setVolume(this.value)">
+    </div>
+  </div>
+
+  <audio id="audio" src="music/hes.mp3" autoplay></audio>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const albumImage = document.getElementById('albumImage');
+    const progress = document.getElementById('progress');
+    const volumeBtn = document.getElementById('volumeBtn');
+    const likeBtn = document.getElementById('likeBtn');
+    const modeBtn = document.getElementById('modeBtn');
+
+    const tracks = [
+      { name: 'Hes', src: 'music/hes.mp3', img: 'images/hes.jpg' },
+      { name: 'Dry Down feat.Ben Snaath', src: 'music/dry.mp3', img: 'images/dry.jpg' },
+      { name: 'Leapt', src: 'music/leapt.mp3', img: 'images/leapt.jpg' },
+      { name: 'Water Feature', src: 'music/water.mp3', img: 'images/water.jpg' }
+    ];
+
+    let currentIndex = 0;
+    let isPlaying = true;
+    let mode = 0; // 0: loop one, 1: loop all, 2: random
+
+    function playTrack(index) {
+      currentIndex = index;
+      audio.src = tracks[index].src;
+      albumImage.src = tracks[index].img;
+      audio.play();
+      isPlaying = true;
+      playPauseBtn.src = 'icons/pause.png';
+    }
+
+    function togglePlayPause() {
+      if (audio.paused) {
+        audio.play();
+        playPauseBtn.src = 'icons/pause.png';
+      } else {
+        audio.pause();
+        playPauseBtn.src = 'icons/play.png';
+      }
+    }
+
+    function nextTrack() {
+      if (mode === 2) {
+        currentIndex = Math.floor(Math.random() * tracks.length);
+      } else {
+        currentIndex = (currentIndex + 1) % tracks.length;
+      }
+      playTrack(currentIndex);
+    }
+
+    function prevTrack() {
+      currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+      playTrack(currentIndex);
+    }
+
+    function toggleLike() {
+      likeBtn.src = likeBtn.src.includes('heart-off') ? 'icons/heart-on.png' : 'icons/heart-off.png';
+    }
+
+    function updateProgress() {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progress.style.width = percent + '%';
+    }
+
+    function seek(e) {
+      const container = e.currentTarget;
+      const percent = e.offsetX / container.offsetWidth;
+      audio.currentTime = percent * audio.duration;
+    }
+
+    function toggleMute() {
+      audio.muted = !audio.muted;
+      volumeBtn.src = audio.muted ? 'icons/mute.png' : 'icons/volume.png';
+    }
+
+    function setVolume(value) {
+      audio.volume = value;
+    }
+
+    function toggleMode() {
+      mode = (mode + 1) % 3;
+      const modes = ['loop-one.png', 'loop-all.png', 'random.png'];
+      modeBtn.src = 'icons/' + modes[mode];
+    }
+
+    audio.addEventListener('ended', () => {
+      if (mode === 0) playTrack(currentIndex);
+      else if (mode === 1) nextTrack();
+      else nextTrack();
+    });
+
+    audio.addEventListener('timeupdate', updateProgress);
+  </script>
 </body>
 </html>
-
-
-:root {
---bg-color: rgba(144, 144, 173, 0.455);
---my-padding: 10px;
---my-borders: 24px;
-}
-
-audio {
-display: block;
-margin-bottom: 20px;
-}
-
-video {
-display: block;
-margin-bottom: 20px;
-}
-
-video {
-width: 600px;
-height: 400px;
-}
-
-button {
-padding: var(--my-padding);
-font-size: 1.2rem;
-border-radius: var(--my-borders);
-margin-right: 10px;
-cursor: pointer;
-background-color: var(--bg-color);
-}
-
-button:hover {
-scale: 0.9;
-}
